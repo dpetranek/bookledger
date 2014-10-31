@@ -1,0 +1,52 @@
+* implementation details
+** db
+*** cheese
+Each user will have their own book table and book-meta table. Actually, I could
+have the book table be global table, and try to match. That could save
+space. But that might be premature. 
+
+I'll go with one table per user, not a shared one. That will avoid privacy
+issues and simplify the design. I can revisit that later.
+
+I'll also remove email from the user table for now. I don't want to store emails
+unless I have a verification set up, and I don't want to do that right off the
+bat, though eventually I will have to handle it.
+
+---
+It's turning out to be difficult to add unique ids to the table. I think it's
+just a syntax mixup, but I'm getting tired and it's not making sense. Do I need
+userids? Is it just a convenience? If the usernames are going to be unique
+anyways, what's the point?
+*** setup
+with psql
+sudo su postgres
+# CREATE ROLE bookledger WITH LOGIN PASSWORD 'admin';
+# CREATE DATABASE bookledger OWNER bookledger;
+
+psql bookledger
+\dt
+\q
+*** schema
+- user table: the user table will just be usernames and password hashes
+  userid [int][pk]
+  username [text]
+  pass hash [text]
+- book table: unique information about a single book; belongs to a user
+  book id [int][pk]
+  user id [int]
+  title [text]
+  author [text]
+  permission [binary]
+  tags [vector]
+  series [text]
+  seriesnum [int]
+- book-meta table: unique information about a single reading; belongs to a user
+  and a book 
+  review id [int][pk]
+  user id [int]
+  book id [int]
+  date modified [date]
+  rating [int]
+  comment [text]
+** user privacy
+to start, no users will be able to see anything belonging to another user.
