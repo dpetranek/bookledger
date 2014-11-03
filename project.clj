@@ -6,7 +6,7 @@
                  [hiccup "1.0.5"]
                  [ring-server "0.3.1"]
                  [postgresql/postgresql "9.1-901.jdbc4"]
-                 [org.clojure/java.jdbc "0.2.3"]
+                 [org.clojure/java.jdbc "0.3.6"]
                  [lib-noir "0.8.2"]]
   :plugins [[lein-ring "0.8.12"]]
   :ring {:handler bookledger.handler/app

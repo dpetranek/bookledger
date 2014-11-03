@@ -3,6 +3,6 @@
 
 (def db
   {:subprotocol "postgresql"
-   :subname "//localhost/gallery"
+   :subname "//localhost/bookledger"
    :user "bookledger"
    :password "admin"})

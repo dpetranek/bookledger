@@ -17,6 +17,26 @@ It's turning out to be difficult to add unique ids to the table. I think it's
 just a syntax mixup, but I'm getting tired and it's not making sense. Do I need
 userids? Is it just a convenience? If the usernames are going to be unique
 anyways, what's the point?
+
+(defn create-users-table []
+  (sql/with-connection db
+    (sql/create-table
+     :users
+     [:userid :serial "PRIMARY KEY"]
+     [:username "varchar(50)"]
+     [:pass "varchar(100)"])))
+
+this funtion produces a valid psql command, but it returns an error. For now,
+I'll just go with username and pass. We'll circle back later. That sucks though!
+I'll have to restructure anything that references the user database. I'll take
+another stab at making it work.
+
+--- 
+
+I ended up updating the database driver from 2.3 to 3.6. I had to read the new
+api, but I found what works. It also didn't help that the db spec was
+incorrectly defined. 
+
 *** setup
 with psql
 sudo su postgres
