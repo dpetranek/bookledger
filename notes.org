@@ -60,7 +60,7 @@ psql bookledger
   tags [vector]
   series [text]
   seriesnum [int]
-- book-meta table: unique information about a single reading; belongs to a user
+- review table: unique information about a single reading; belongs to a user
   and a book 
   review id [int][pk]
   user id [int]
@@ -68,5 +68,38 @@ psql bookledger
   date modified [date]
   rating [int]
   comment [text]
+*** queries
+- homepage
+  SELECT * FROM books LEFT JOIN reviews ON books.bookid = reviews.bookid WHERE
+  books.userid = :userid ORDER BY reviews.dateRead
+** stats
+- how many books did I read in <time period>?
+- what genre do I read the most?
+- what author do like the best?
+- what books do I keep coming back to?
+- what author have I read the most?
+- who has recommended books to me?
+- who's recommendations did I enjoy the most?
+- what books have I loaned out? To whom?
+- when do I read the most?
+- how have my views on this book? How has that changed over time?
+- what do I think of this author? How has that changed over time?
 ** user privacy
-to start, no users will be able to see anything belonging to another user.
+to start, no users will be able to see anything belonging to another user. I
+would like to add granular privacy controls, though. Mark these books as
+public, mark these reviews as public, mark these fields as public. Also offer
+some sensible defaults - all private. 
+
+- policy
+  I don't want your information - it's yours. 
+** introduction
+Bookledger - track your reading.
+
+Hello! I like to read books. I keep track of books I've read and I'd like to
+learn about my reading patterns. I get recommendations from friends, but
+sometimes I forget. So I built bookledger, a place to track the books you've
+read and the books you want read, and an easy way to learn some nifty things
+about your reading patterns. 
+** greenfield
+- book discussion pages
+- self-hosting
