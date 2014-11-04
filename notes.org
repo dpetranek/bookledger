@@ -1,3 +1,9 @@
+* action
+** TODO books table schema
+** TODO reviews table schema
+** TODO implement insert-book
+** TODO implement insert-review
+** TODO display books left join reviews 
 * implementation details
 ** db
 *** cheese
@@ -100,6 +106,35 @@ learn about my reading patterns. I get recommendations from friends, but
 sometimes I forget. So I built bookledger, a place to track the books you've
 read and the books you want read, and an easy way to learn some nifty things
 about your reading patterns. 
+** functionality
+- Auth
+  - registration
+  - login
+  - logout
+- Add
+  - add book record
+  - bulk upload
+    - should mirror the export
+    - each row is like a left join of books and reviews
+- Filter + Sort
+  - by a reasonable number of fields
+- Search
+  - incremental search with suggestions
+  - advanced search - specify search logic
+- Explore
+  - Use links on records to browse to other similar records, wiki style
+- Settings
+  - granular privacy
+    - what fields are visible to those you share with - circles
+    - who you share with
+  - password reset
+  - export
+  - account deletion
+- Library management
+  - track books loaned to friends
+  - track books received from friends
 ** greenfield
 - book discussion pages
 - self-hosting
+** layout
+
