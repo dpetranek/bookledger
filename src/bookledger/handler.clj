@@ -2,7 +2,8 @@
   (:require [compojure.core :refer [defroutes]]
             [compojure.route :as route]
             [noir.util.middleware :as noir-middleware]
-            [bookledger.routes.home :refer [home-routes]]))
+            [bookledger.routes.home :refer [home-routes]]
+            [bookledger.routes.auth :refer [auth-routes]]))
 
 (defn init []
   (println "bookledger is starting"))
@@ -16,5 +17,6 @@
 
 (def app
   (noir-middleware/app-handler
-   [home-routes
+   [auth-routes
+    home-routes
     app-routes]))

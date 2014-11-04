@@ -3,10 +3,11 @@
             [clojure.java.jdbc :as sql]))
 
 (defn create-users-table []
-  (sql/db-do-commands db
+  (sql/db-do-commands db-spec
                       (sql/create-table-ddl
                        :users
                        [:userid :serial "PRIMARY KEY"]
-                       [:username "varchar(50)"]
+                       [:username "varchar(50) UNIQUE"]
                        [:pass "varchar(100)"])))
+
 
