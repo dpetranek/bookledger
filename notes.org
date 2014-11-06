@@ -1,6 +1,6 @@
 * action
-** TODO books table schema
-** TODO reviews table schema
+** DONE books table schema
+** DONE reviews table schema
 ** TODO implement insert-book
 ** TODO implement insert-review
 ** TODO display books left join reviews 

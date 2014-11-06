@@ -10,4 +10,23 @@
                        [:username "varchar(50) UNIQUE"]
                        [:pass "varchar(100)"])))
 
+(defn create-books-table []
+  (sql/db-do-commands db-spec
+                      (sql/create-table-ddl
+                       :books
+                       [:bookid :serial "PRIMARY KEY"]
+                       [:userid :int]
+                       [:title "varchar(100)"]
+                       [:author "varchar(100)"]
+                       [:series "varchar(100)"]
+                       [:seriesnum :int])))
 
+(defn create-reviews-table []
+  (sql/db-do-commands db-spec
+                      (sql/create-table-ddl
+                       :reviews
+                       [:reviewid :serial "PRIMARY KEY"]
+                       [:bookid :int]
+                       [:rating :int]
+                       [:synopsis :text]
+                       [:comment :text])))

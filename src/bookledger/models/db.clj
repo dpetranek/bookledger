@@ -11,6 +11,13 @@
   (sql/insert! db-spec :users user))
 
 (defn get-user [username]
-  (first (sql/query db-spec ["SELECT * FROM users where username = ?" username])))
+  (first (sql/query db-spec ["SELECT * FROM users WHERE username = ?"
+  username])))
+
+(defn add-book [book]
+  (sql/insert! db-spec :books book))
+
+(defn read-books []
+  (sql/query db-spec ["SELECT * FROM books"]))
 
 
