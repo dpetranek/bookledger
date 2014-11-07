@@ -43,6 +43,25 @@ I ended up updating the database driver from 2.3 to 3.6. I had to read the new
 api, but I found what works. It also didn't help that the db spec was
 incorrectly defined. 
 
+---
+
+Inserting into two tables requires returning the bookid from the books table so
+we can include it on the insert into the reviews table. Ideally, this is what I
+want:
+
+INSERT INTO books (userid, title) VALUES (<vals>) RETURNING bookid;
+
+However, I can't do that with java.jdbc. At least, I've not been able to figure
+it out. I'll ask in IRC, but I'm not confident I'll get a useful response. The
+runner up solutions use curval() and lastval(), but I haven't been able to get
+those to work. What I have gotten to work is this:
+
+(sql/query db-spec ["SELECT max(bookid) FROM books"])
+
+That will have to do for now. Reference:
+http://stackoverflow.com/questions/2944297/postgresql-function-for-last-inserted-id
+
+
 *** setup
 with psql
 sudo su postgres

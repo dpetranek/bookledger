@@ -41,6 +41,7 @@
 ;; registration
 (defn registration-page [& [username]]
   (layout/base
+   [:h1 "Bookledger"]
    (form-to [:post "/register"]
             (control :username
                      (label "username" "Username")

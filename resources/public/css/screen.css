@@ -15,13 +15,14 @@ body {
 }
 
 .header {
-    text-align: center;
-    color: #444;
+  text-align: center;
+  color: #444;
 }
 
 #center {
   width: 100%;
   text-align: center;
+  margin: auto;
 }
 
 #left {
