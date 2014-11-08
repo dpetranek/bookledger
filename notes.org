@@ -1,10 +1,21 @@
 * action
 ** DONE books table schema
 ** DONE reviews table schema
-** TODO implement insert-book
+** DONE implement insert-book
 (session/get :userid) isn't actually returning the userid, I don't
 believe. I've updated the auth workflow to load the whole user record into the
-session as a map. Maybe that's the issue, that it's a map inside the map.
+session as a map. Maybe that's the issue, that it's a map inside the map. 
+---
+I've fixed it by verifying that we're loading the whole user row as :user and
+then use (:<columnIwant> (session/get :user)). That works, is a bit verbose,
+but I'll refactor later.
+** DONE fix double display of layout/common
+So, I had show-library wrapped in layout/common. That caused everything to be
+show twice. When I removed the wrapping, nothing showed at all.
+---
+I fixed this by realizing that a funtion only returns the last item. So I
+wrapped the whole output in a div. It's a hack, but it works for now.
+
 ** TODO implement insert-review
 ** TODO display books left join reviews 
 * implementation details
@@ -77,6 +88,7 @@ psql bookledger
   userid [int][pk]
   username [text]
   pass hash [text]
+
 - book table: unique information about a single book; belongs to a user
   book id [int][pk]
   user id [int]
@@ -86,6 +98,7 @@ psql bookledger
   tags [vector]
   series [text]
   seriesnum [int]
+
 - review table: unique information about a single reading; belongs to a user
   and a book 
   review id [int][pk]

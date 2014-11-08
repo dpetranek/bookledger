@@ -12,6 +12,9 @@
      (include-css "/css/screen.css")]
     [:body content]))
 
+(defn nav []
+  [:div ""])
+
 (defn login-widget []
   (if-let [user (:username (session/get :user))]
     [:div (link-to "/logout" (str "Logout " user))]
@@ -24,10 +27,10 @@
 (defn common [& content]
   (base
    [:div {:id "container"}
-      [:div.main
-       [:div.column {:id "left"}]
+    [:div.main
+       [:div.column {:id "left"} (nav)]
        [:div.column {:id "center"} content]
        [:div.column {:id "right"} (login-widget)]]
-      [:div.footer]]))
+    [:div#footer]]))
 
 

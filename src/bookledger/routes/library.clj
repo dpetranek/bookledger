@@ -18,23 +18,25 @@
       [:td seriesnum]])])
 
 (defn show-library []
-  (layout/common
-   [:h1 (str (:username (session/get :user)) "'s Bookledger")]
+  [:div
+   [:h1 (str (:username (session/get :user))) "'s Bookledger"]
    (form-to [:post "/library"]
             [:div
-             (label "author" "Author")
-             (text-field {:tabindex 1 :placeholder "Last Name"} "author")]
+             (label "authorl" "Author")
+             (text-field {:tabindex 1 :placeholder "Last Name"} "authorl")]
+            [:div
+             (text-field {:tabindex 2 :placeholder "First Name"} "authorf")]
             [:div
              (label "title" "Title")
-             (text-field {:tabindex 2} "title")]
+             (text-field {:tabindex 3} "title")]
             [:div
              (label "series" "Series")
-             (text-field {:tabindex 3} "series")]
+             (text-field {:tabindex 4} "series")]
             [:div
              (label "seriesnum" "#")
-             (text-field {:tabindex 4 :size 2} "seriesnum")]
-            (submit-button {:tabindex 5} "Add Book"))
-   (show-books (:userid (session/get :user)))))
+             (text-field {:tabindex 5 :size 2} "seriesnum")]
+            (submit-button {:tabindex 6} "Add Book"))
+   (show-books (:userid (session/get :user)))])
 
 
 (defn handle-book [author title series seriesnum]
@@ -44,12 +46,8 @@
                   :series series
                   :seriesnum (bigdec seriesnum)
                   :userid (:userid (session/get :user))})
-    (resp/redirect "/library")
+    (resp/redirect "/")
     (catch Exception ex
-      ("/library"))))
+      [:p "Error submitting book"]
+      ("/"))))
 
-(defroutes library-routes
-  (GET "/library" []
-       (show-library))
-  (POST "/library" [author title series seriesnum]
-        (handle-book author title series seriesnum)))

@@ -17,7 +17,8 @@
                        [:bookid :serial "PRIMARY KEY"]
                        [:userid :int]
                        [:title "varchar(100)"]
-                       [:author "varchar(100)"]
+                       [:authorf "varchar(50)"]
+                       [:authorl "varchar(50)"]
                        [:series "varchar(100)"]
                        [:seriesnum :int])))
 

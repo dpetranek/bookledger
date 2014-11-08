@@ -28,7 +28,7 @@ body {
 #left {
   width: 150px;          /* LC width */
   right: 150px;          /* LC width */
-  margin-left: -100%;
+  margin-left: 00%;
 }
 
 #right {
@@ -38,6 +38,7 @@ body {
 
 #footer {
   clear: both;
+  text-align: center;
 }
 
 .error {

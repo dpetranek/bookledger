@@ -6,7 +6,7 @@
             [noir.response :as resp]
             [bookledger.views.layout :as layout]
             [bookledger.models.db :as db]
-            [bookledger.routes.library :refer [show-library]]))
+            [bookledger.routes.library :refer :all]))
 
 (defn home [& userid]
   (layout/common
@@ -15,4 +15,6 @@
      [:h1 "Log In"])))
 
 (defroutes home-routes
-  (GET "/" [] (home)))
+  (GET "/" [] (home))
+  (POST "/library" [author title series seriesnum]
+        (handle-book author title series seriesnum)))

@@ -62,7 +62,7 @@
     (try
       (db/create-user {:username username :pass (crypt/encrypt pass)})
       (session/put! :user (db/get-user username))
-      (resp/redirect "/library")
+      (resp/redirect "/")
       (catch Exception ex
         (val/rule false [:username (format-error username ex)])
         (registration-page)))
@@ -74,7 +74,7 @@
   (let [user (db/get-user username)]
     (if (and user (crypt/compare pass (:pass user)))
       (session/put! :user user)))
-  (resp/redirect "/library"))
+  (resp/redirect "/"))
 
 ;; logout
 (defn handle-logout []
