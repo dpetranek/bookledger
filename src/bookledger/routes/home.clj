@@ -8,16 +8,11 @@
             [bookledger.models.db :as db]
             [bookledger.routes.library :refer [show-library]]))
 
-
-
-
 (defn home [& userid]
   (layout/common
-   (if (= userid (session/get :userid))
-     (show-library userid))))
-
-
-
+   (if-let [user (session/get :user)]
+     (show-library (session/get :userid))
+     [:h1 "Log In"])))
 
 (defroutes home-routes
   (GET "/" [] (home)))

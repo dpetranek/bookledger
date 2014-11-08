@@ -20,24 +20,19 @@
 (defn show-library [userid]
   (layout/common
    [:h1 "Bookledger"]
-   (form-to [:post "/"]
-            [:table
-             [:tr
-              [:td
-               (label "author" "Author")
-               (text-field {:tabindex 1
-                            :placeholder "Last Name"} "author")]]
-             [:tr
-              [:td
-               (label "title" "Title")
-               (text-field {:tabindex 2} "title")]]
-             [:tr
-              [:td
-               (label "series" "Series")
-               (text-field {:tabindex 3} "series")]
-              [:td
-               (label "seriesnum" "#")
-               (text-field {:tabindex 4 :size 2} "seriesnum")]]]
+   (form-to [:post "/library"]
+            [:div
+             (label "author" "Author")
+             (text-field {:tabindex 1 :placeholder "Last Name"} "author")]
+            [:div
+             (label "title" "Title")
+             (text-field {:tabindex 2} "title")]
+            [:div
+             (label "series" "Series")
+             (text-field {:tabindex 3} "series")]
+            [:div
+             (label "seriesnum" "#")
+             (text-field {:tabindex 4 :size 2} "seriesnum")]
             (submit-button {:tabindex 5} "Add Book"))
    (show-books (session/get :userid))))
 
@@ -54,5 +49,7 @@
       ("/"))))
 
 (defroutes library-routes
-  (GET "/library/:userid" [userid]
-       (show-library userid)))
+  (GET "/library" [userid]
+       (show-library userid))
+  (POST "/library" [author title series seriesnum]
+        (handle-book author title series seriesnum)))
