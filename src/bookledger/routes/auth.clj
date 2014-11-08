@@ -37,6 +37,9 @@
             [:pass "Passwords don't match"])
   (not (val/errors? :username :pass :pass1)))
 
+(defn load-user [username]
+  (let [user (db/get-user username)]))
+
 
 ;; registration
 (defn registration-page [& [username]]
@@ -58,8 +61,8 @@
   (if (valid? username pass pass1)
     (try
       (db/create-user {:username username :pass (crypt/encrypt pass)})
-      (session/put! :user username)
-      (resp/redirect "/")
+      (session/put! :user (db/get-user username))
+      (resp/redirect "/library")
       (catch Exception ex
         (val/rule false [:username (format-error username ex)])
         (registration-page)))
@@ -70,8 +73,8 @@
 (defn handle-login [username pass]
   (let [user (db/get-user username)]
     (if (and user (crypt/compare pass (:pass user)))
-      (session/put! :user username)))
-  (resp/redirect "/"))
+      (session/put! :user user)))
+  (resp/redirect "/library"))
 
 ;; logout
 (defn handle-logout []

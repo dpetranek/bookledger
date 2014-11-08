@@ -2,6 +2,9 @@
 ** DONE books table schema
 ** DONE reviews table schema
 ** TODO implement insert-book
+(session/get :userid) isn't actually returning the userid, I don't
+believe. I've updated the auth workflow to load the whole user record into the
+session as a map. Maybe that's the issue, that it's a map inside the map.
 ** TODO implement insert-review
 ** TODO display books left join reviews 
 * implementation details
@@ -60,8 +63,6 @@ those to work. What I have gotten to work is this:
 
 That will have to do for now. Reference:
 http://stackoverflow.com/questions/2944297/postgresql-function-for-last-inserted-id
-
-
 *** setup
 with psql
 sudo su postgres

@@ -17,9 +17,9 @@
       [:td series]
       [:td seriesnum]])])
 
-(defn show-library [userid]
+(defn show-library []
   (layout/common
-   [:h1 "Bookledger"]
+   [:h1 (str (:username (session/get :user)) "'s Bookledger")]
    (form-to [:post "/library"]
             [:div
              (label "author" "Author")
@@ -34,7 +34,7 @@
              (label "seriesnum" "#")
              (text-field {:tabindex 4 :size 2} "seriesnum")]
             (submit-button {:tabindex 5} "Add Book"))
-   (show-books (session/get :userid))))
+   (show-books (:userid (session/get :user)))))
 
 
 (defn handle-book [author title series seriesnum]
@@ -43,13 +43,13 @@
                   :title title
                   :series series
                   :seriesnum (bigdec seriesnum)
-                  :userid (session/get :userid)})
-    (resp/redirect "/")
+                  :userid (:userid (session/get :user))})
+    (resp/redirect "/library")
     (catch Exception ex
-      ("/"))))
+      ("/library"))))
 
 (defroutes library-routes
-  (GET "/library" [userid]
-       (show-library userid))
+  (GET "/library" []
+       (show-library))
   (POST "/library" [author title series seriesnum]
         (handle-book author title series seriesnum)))

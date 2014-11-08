@@ -11,7 +11,7 @@
 (defn home [& userid]
   (layout/common
    (if-let [user (session/get :user)]
-     (show-library (session/get :userid))
+     (show-library)
      [:h1 "Log In"])))
 
 (defroutes home-routes

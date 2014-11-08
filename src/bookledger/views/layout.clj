@@ -13,7 +13,7 @@
     [:body content]))
 
 (defn login-widget []
-  (if-let [user (session/get :user)]
+  (if-let [user (:username (session/get :user))]
     [:div (link-to "/logout" (str "Logout " user))]
     [:div (link-to "/register" "Register")
      (form-to [:post "/login"]
