@@ -10,12 +10,13 @@
 
 (defn show-books [userid]
   [:table
-   (for [{:keys [title author series seriesnum]} (db/read-books userid)]
+   [:tr
+    [:td "Title"] [:td "Author"] [:td "Series" ]]
+   (for [{:keys [title authorl authorf series seriesnum]} (db/read-books userid)]
      [:tr
       [:td title]
-      [:td author]
-      [:td series]
-      [:td seriesnum]])])
+      [:td authorl "," authorf]
+      [:td series "-" seriesnum]])])
 
 (defn show-library []
   [:div
@@ -39,13 +40,15 @@
    (show-books (:userid (session/get :user)))])
 
 
-(defn handle-book [author title series seriesnum]
+(defn handle-book [authorl authorf title series seriesnum]
   (try
-    (db/add-book {:author author
+    (db/add-book {:authorl authorl
+                  :authorf authorf
                   :title title
                   :series series
                   :seriesnum (bigdec seriesnum)
                   :userid (:userid (session/get :user))})
+    (println (str authorl authorf title series seriesnum))
     (resp/redirect "/")
     (catch Exception ex
       [:p "Error submitting book"]

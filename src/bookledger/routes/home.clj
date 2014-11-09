@@ -16,5 +16,5 @@
 
 (defroutes home-routes
   (GET "/" [] (home))
-  (POST "/library" [author title series seriesnum]
-        (handle-book author title series seriesnum)))
+  (POST "/library" [authorl authorf title series seriesnum]
+        (handle-book authorl authorf title series seriesnum)))
