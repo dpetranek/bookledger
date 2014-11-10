@@ -63,7 +63,7 @@
   (db/add-book {:authorl (:authorl request)
                 :authorf (:authorf request)
                 :title (:title request)
-                :series (checkparam :series request)
+                :series (check-param :series request)
                 :seriesnum (if (check-param :seriesnum request)
                              (bigdec (:seriesnum request))
                              nil)

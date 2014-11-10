@@ -33,6 +33,11 @@ Ok, I think it's a problem with the request map, actually. Something has
 changed in how the browser is submitting data - I think it's empty. When I
 click on the POST request in the console, there is no params section. I'm tired
 and my head is not working well, I'll come at this tomorrow.
+
+---
+
+Make sure that all the network access logging option are checked in the browser
+console. I am sending data.
 ** TODO implement insert-review
 ** TODO display books left join reviews 
 * implementation details
