@@ -16,6 +16,23 @@ show twice. When I removed the wrapping, nothing showed at all.
 I fixed this by realizing that a funtion only returns the last item. So I
 wrapped the whole output in a div. It's a hack, but it works for now.
 
+** TODO allow blank inputs
+I need to do some validation. So, I've changed the handler so POST to /libray
+goes to handle-request. It just submits the whole request map. By having VALUES
+of the query be key lookups, I was able to get it working as before.
+
+Then I started some validation. I added an if statement to series, returning
+"null" if (:series request-map) was falsey. That worked wonderfully. Then I tried
+to do the same with seriesnum. Things stopped working. I changed it to return
+nil instead of "null", and now I can submit blank series and blank
+seriesnum. However, now author and title are returning nil too, for some reason
+I can't readily divine. I'm going to change it back and see if I can get the
+previous behavior.
+
+Ok, I think it's a problem with the request map, actually. Something has
+changed in how the browser is submitting data - I think it's empty. When I
+click on the POST request in the console, there is no params section. I'm tired
+and my head is not working well, I'll come at this tomorrow.
 ** TODO implement insert-review
 ** TODO display books left join reviews 
 * implementation details

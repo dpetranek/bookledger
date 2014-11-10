@@ -16,7 +16,7 @@
      [:tr
       [:td title]
       [:td authorl "," authorf]
-      [:td series "-" seriesnum]])])
+      [:td series " - " seriesnum]])])
 
 (defn show-library []
   [:div
@@ -53,4 +53,21 @@
     (catch Exception ex
       [:p "Error submitting book"]
       ("/"))))
+
+(defn check-param [param-key map]
+  (if (param-key map)
+    (param-key map)
+    nil))
+
+(defn handle-request [request]
+  (db/add-book {:authorl (:authorl request)
+                :authorf (:authorf request)
+                :title (:title request)
+                :series (checkparam :series request)
+                :seriesnum (if (check-param :seriesnum request)
+                             (bigdec (:seriesnum request))
+                             nil)
+                :userid (:userid (session/get :user))})
+  (resp/redirect "/"))
+
 
