@@ -20,9 +20,6 @@
 (defn read-books [user]
   (sql/query db-spec ["SELECT * FROM books WHERE userid = ?" user]))
 
-'(defn create-book [book]
-  (sql/query db-spec ["INSERT INTO books (userid, title) VALUES ? RETURNING
-  bookid" book]))
 
 
 

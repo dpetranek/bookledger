@@ -17,4 +17,4 @@
 (defroutes home-routes
   (GET "/" [] (home))
   (POST "/library" [:as request]
-        (handle-request request)))
+        (handle-library (:params request))))

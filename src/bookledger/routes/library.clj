@@ -39,34 +39,22 @@
             (submit-button {:tabindex 6} "Add Book"))
    (show-books (:userid (session/get :user)))])
 
-
-(defn handle-book [authorl authorf title series seriesnum]
-  (try
-    (db/add-book {:authorl authorl
-                  :authorf authorf
-                  :title title
-                  :series series
-                  :seriesnum (bigdec seriesnum)
-                  :userid (:userid (session/get :user))})
-    (println (str authorl authorf title series seriesnum))
-    (resp/redirect "/")
-    (catch Exception ex
-      [:p "Error submitting book"]
-      ("/"))))
-
-(defn check-param [param-key map]
-  (if (param-key map)
-    (param-key map)
+(defn blank? [s]
+  (if (not= s "")
+    s
     nil))
 
-(defn handle-request [request]
-  (db/add-book {:authorl (:authorl request)
-                :authorf (:authorf request)
-                :title (:title request)
-                :series (check-param :series request)
-                :seriesnum (if (check-param :seriesnum request)
-                             (bigdec (:seriesnum request))
-                             nil)
+(defn char->int [c]
+  (if (blank? c)
+    (bigdec c)
+    nil))
+
+(defn handle-library [request]
+  (db/add-book {:authorl (blank? (:authorl request))
+                :authorf (blank? (:authorf request))
+                :title (blank? (:title request))
+                :series (blank? (:series request))
+                :seriesnum  (char->int (:seriesnum request))
                 :userid (:userid (session/get :user))})
   (resp/redirect "/"))
 
