@@ -16,7 +16,7 @@ show twice. When I removed the wrapping, nothing showed at all.
 I fixed this by realizing that a funtion only returns the last item. So I
 wrapped the whole output in a div. It's a hack, but it works for now.
 
-** TODO allow blank inputs
+** DONE allow blank inputs
 I need to do some validation. So, I've changed the handler so POST to /libray
 goes to handle-request. It just submits the whole request map. By having VALUES
 of the query be key lookups, I was able to get it working as before.
@@ -50,6 +50,19 @@ clojure data was stored. After that, it was just mop-up.
 
 ** TODO implement insert-review
 ** TODO display books left join reviews 
+** TODO account settings
+** TODO deletion
+- [ ] delete user
+- [ ] delete item
+** TODO mass export
+- [ ] allow export at any time
+- [ ] full csv of all data
+
+# COPY books left join reviews TO <filename>
+** TODO search
+** TODO filter
+** TODO deploy
+heroku
 * implementation details
 ** db
 *** cheese
