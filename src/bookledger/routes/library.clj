@@ -4,23 +4,23 @@
             [noir.session :as session]
             [noir.validation :as val]
             [noir.response :as resp]
+            [clj-time.core :as t]
             [bookledger.views.layout :as layout]
             [bookledger.models.db :as db]))
 
 
-(defn show-books [userid]
-  [:table
-   [:tr
-    [:td "Title"] [:td "Author"] [:td "Series" ]]
-   (for [{:keys [title authorl authorf series seriesnum]} (db/read-books userid)]
-     [:tr
-      [:td title]
-      [:td authorl "," authorf]
-      [:td series " - " seriesnum]])])
+(defn blank? [s]
+  (if (not= s "")
+    s
+    nil))
 
-(defn show-library []
-  [:div
-   [:h1 (str (:username (session/get :user))) "'s Bookledger"]
+(defn char->int [c]
+  (if (blank? c)
+    (bigdec c)
+    nil))
+
+(defn add-book []
+  (layout/common
    (form-to [:post "/library"]
             [:div
              (label "authorl" "Author")
@@ -36,26 +36,39 @@
             [:div
              (label "seriesnum" "#")
              (text-field {:tabindex 5 :size 2} "seriesnum")]
-            (submit-button {:tabindex 6} "Add Book"))
-   (show-books (:userid (session/get :user)))])
-
-(defn blank? [s]
-  (if (not= s "")
-    s
-    nil))
-
-(defn char->int [c]
-  (if (blank? c)
-    (bigdec c)
-    nil))
+            [:div
+             (label "rating" "Rating")
+             (text-field {:tabindex 6 :size 2} "rating")]
+            [:div
+             (label "date" "Date")
+             (text-field {:tabindex 7} "date")]
+            [:div
+             (label "synopsis" "Synopsis")
+             (text-area {:tabindex 8} "synopsis")]
+            [:div
+             (label "comment" "Comment")
+             (text-area {:tabindex 9} "comment")]
+            (submit-button {:tabindex 10} "Add Book"))))
 
 (defn handle-library [request]
-  (db/add-book {:authorl (blank? (:authorl request))
-                :authorf (blank? (:authorf request))
-                :title (blank? (:title request))
-                :series (blank? (:series request))
-                :seriesnum  (char->int (:seriesnum request))
-                :userid (:userid (session/get :user))})
-  (resp/redirect "/"))
+  (try
+    (db/add-book {:authorl (blank? (:authorl request))
+                  :authorf (blank? (:authorf request))
+                  :title (blank? (:title request))
+                  :series (blank? (:series request))
+                  :seriesnum  (char->int (:seriesnum request))
+                  :userid (:userid (session/get :user))})
+    (let [bookid (first (db/get-bookid))]
+      (db/add-review {:bookid (:max bookid)
+                      :rating (char->int (:rating request))
+                      :finished (blank? (:date request))
+                      :synopsis (blank? (:synopsis request))
+                      :comment (blank? (:comment request))}))
+    (resp/redirect "/")))
+
+(defroutes library-routes
+  (GET "/library" [] (add-book))
+  (POST "/library" [:as request]
+        (handle-library (:params request))))
 
 

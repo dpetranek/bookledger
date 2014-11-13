@@ -20,6 +20,14 @@
 (defn read-books [user]
   (sql/query db-spec ["SELECT * FROM books WHERE userid = ?" user]))
 
+(defn get-bookid
+  "Returns the id of the last book entered"
+  []
+  (sql/query db-spec ["SELECT max(bookid) FROM books"]))
+
+(defn add-review [review]
+  (sql/insert! db-spec :reviews review))
+
 
 
 

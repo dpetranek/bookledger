@@ -5,16 +5,24 @@
             [noir.validation :as val]
             [noir.response :as resp]
             [bookledger.views.layout :as layout]
-            [bookledger.models.db :as db]
-            [bookledger.routes.library :refer :all]))
+            [bookledger.models.db :as db]))
+
+
+(defn show-books [userid]
+  [:table
+   [:tr
+    [:td "Title"] [:td "Author"] [:td "Series" ]]
+   (for [{:keys [title authorl authorf series seriesnum]} (db/read-books userid)]
+     [:tr
+      [:td title]
+      [:td authorl "," authorf]
+      [:td series " - " seriesnum]])])
 
 (defn home [& userid]
   (layout/common
    (if-let [user (session/get :user)]
-     (show-library)
+     (show-books (:userid user))
      [:h1 "Log In"])))
 
 (defroutes home-routes
-  (GET "/" [] (home))
-  (POST "/library" [:as request]
-        (handle-library (:params request))))
+  (GET "/" [] (home)))
