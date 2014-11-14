@@ -5,6 +5,8 @@
             [noir.validation :as val]
             [noir.response :as resp]
             [clj-time.core :as t]
+            [clj-time.format :as tf]
+            [clj-time.coerce :as tc]
             [bookledger.views.layout :as layout]
             [bookledger.models.db :as db]))
 
@@ -18,6 +20,13 @@
   (if (blank? c)
     (bigdec c)
     nil))
+
+(def bformatter (tf/formatter "yyyyMMdd"))
+
+(defn str->date [s]
+  (->> s
+       (tf/parse bformatter)
+       (tc/to-sql-date)))
 
 (defn add-book []
   (layout/common
@@ -41,7 +50,7 @@
              (text-field {:tabindex 6 :size 2} "rating")]
             [:div
              (label "date" "Date")
-             (text-field {:tabindex 7} "date")]
+             (text-field {:tabindex 7 :placeholder "yyyyMMdd"} "date")]
             [:div
              (label "synopsis" "Synopsis")
              (text-area {:tabindex 8} "synopsis")]
@@ -61,7 +70,8 @@
     (let [bookid (first (db/get-bookid))]
       (db/add-review {:bookid (:max bookid)
                       :rating (char->int (:rating request))
-                      :finished (blank? (:date request))
+                      :date (when (not (blank? (:date request)))
+                              (str->date (:date request)))
                       :synopsis (blank? (:synopsis request))
                       :comment (blank? (:comment request))}))
     (resp/redirect "/")))

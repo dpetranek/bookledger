@@ -29,6 +29,6 @@
                        [:reviewid :serial "PRIMARY KEY"]
                        [:bookid :int]
                        [:rating :int]
-                       [:finished :text]
+                       [:date :timestamp]
                        [:synopsis :text]
                        [:comment :text])))
