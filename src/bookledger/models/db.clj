@@ -18,7 +18,8 @@
   (sql/insert! db-spec :books book))
 
 (defn read-books [user]
-  (sql/query db-spec ["SELECT * FROM books WHERE userid = ?" user]))
+  (sql/query db-spec ["SELECT * FROM books LEFT JOIN reviews ON books.bookid =
+  reviews.bookid WHERE userid = ? ORDER BY reviews.date" user]))
 
 (defn get-bookid
   "Returns the id of the last book entered"

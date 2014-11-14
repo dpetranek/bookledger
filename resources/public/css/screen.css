@@ -9,6 +9,7 @@ body {
     display: table;
     width: 100%;
     text-align: center;
+    padding: 0px 10px;    
 }
 
 #header {
@@ -19,15 +20,13 @@ body {
 
 #header form {
     float: right;
-    padding: 0px 10px;    
+
 }
 
 #header a {
 
     padding: 0px 10px;    
 }
-
-
 
 .main {
     height: 100%;
@@ -41,8 +40,11 @@ body {
 
 #center {
   width: 100%;
-  text-align: center;
+  text-align: left;
   margin: auto;
+}
+#center h1 {
+    text-align: center;
 }
 
 #left {
@@ -65,3 +67,4 @@ label {
     width: 150px;
     float: left;
 }
+

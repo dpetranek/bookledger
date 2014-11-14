@@ -28,6 +28,11 @@
        (tf/parse bformatter)
        (tc/to-sql-date)))
 
+(defn date->str [d]
+  (->> d
+       (tc/from-sql-date)
+       (tf/unparse bformatter)))
+
 (defn add-book []
   (layout/common
    (form-to [:post "/library"]
@@ -70,7 +75,7 @@
     (let [bookid (first (db/get-bookid))]
       (db/add-review {:bookid (:max bookid)
                       :rating (char->int (:rating request))
-                      :date (when (not (blank? (:date request)))
+                      :date (when (blank? (:date request))
                               (str->date (:date request)))
                       :synopsis (blank? (:synopsis request))
                       :comment (blank? (:comment request))}))
