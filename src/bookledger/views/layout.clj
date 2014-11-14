@@ -13,11 +13,13 @@
     [:body content]))
 
 (defn nav []
-  [:div ""])
+  [:div "NAv"])
 
 (defn login-widget []
   (if-let [user (:username (session/get :user))]
-    [:div (link-to "/logout" (str "Logout " user))]
+    [:div (link-to "/" "Bookledger")
+     (link-to "/library" "Add Book")
+     (link-to "/logout" (str "Logout " user))]
     [:div (link-to "/register" "Register")
      (form-to [:post "/login"]
               (text-field {:placeholder "Username"} "username")
@@ -27,10 +29,11 @@
 (defn common [& content]
   (base
    [:div {:id "container"}
+    [:div#header (login-widget)]
     [:div.main
-       [:div.column {:id "left"} (nav)]
+       [:div.column {:id "left"}]
        [:div.column {:id "center"} content]
-       [:div.column {:id "right"} (login-widget)]]
+       [:div.column {:id "right"}]]
     [:div#footer]]))
 
 

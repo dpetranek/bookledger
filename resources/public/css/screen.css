@@ -5,18 +5,38 @@ body {
 }
 
 #container {
-  padding-left: 150px;   /* LC width */
-  padding-right: 150px;  /* RC width */
+    height: 100%;
+    display: table;
+    width: 100%;
+    text-align: center;
 }
 
-#container .column {
-  position: relative;
-  float: left;
+#header {
+    display: table-row;
+    text-align: right;
+
 }
 
-.header {
-  text-align: center;
-  color: #444;
+#header form {
+    float: right;
+    padding: 0px 10px;    
+}
+
+#header a {
+
+    padding: 0px 10px;    
+}
+
+
+
+.main {
+    height: 100%;
+    display: table;
+    width: 100%;
+}
+
+.column {
+    display: table-cell;
 }
 
 #center {
@@ -26,19 +46,15 @@ body {
 }
 
 #left {
-  width: 150px;          /* LC width */
-  right: 150px;          /* LC width */
-  margin-left: 00%;
+    width: 150px;
 }
 
 #right {
   width: 150px;          /* LC width */
-  margin-right: -150px;  /* RC width */
 }
 
 #footer {
-  clear: both;
-  text-align: center;
+  display: table-row;
 }
 
 .error {
