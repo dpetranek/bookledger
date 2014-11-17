@@ -12,12 +12,20 @@
 (defn show-books [userid]
   [:div
    [:h1 "Bookledger"]
-   [:table
+   [:div.library
     (for [{:keys [title date authorl authorf series seriesnum rating synopsis comment]}
           (db/read-books userid)]
-      [:tr
-       [:td title]
-       [:td (date->str date)]])]])
+      [:div.results
+       [:div.summary
+        [:div.title title]
+        [:div.date (date->str date)]]
+       [:div.detail
+        [:div authorl "," authorf]
+        [:div title]
+        (when series [:div series " " seriesnum])
+        [:div rating]
+        [:div synopsis]
+        [:div comment]]])]])
 
 (defn home [& userid]
   (layout/common

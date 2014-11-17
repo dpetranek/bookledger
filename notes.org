@@ -60,8 +60,14 @@ this will collect information for both the books table insert and the reviews
 table insert. This will be on its own seperate page. 
 ** DONE implement insert-review
 make sure to add exception handling later
-** TODO display books left join reviews 
-** TODO get dates to work
+** DONE get dates to work
+** DONE display books left join reviews
+or is it right join? I need to figure out how to find duplicate books.
+** TODO implement tags
+add each unique tag to the user record
+add multiple tags to a book record 
+** TODO verify no duplicate books
+may need to alter the books schema so title+authorl is the key
 ** TODO account settings
 ** TODO deletion
 - [ ] delete user
@@ -69,7 +75,6 @@ make sure to add exception handling later
 ** TODO mass export
 - [ ] allow export at any time
 - [ ] full csv of all data
-
 # COPY books left join reviews TO <filename>
 ** TODO get a date-picker
 ** TODO search
@@ -132,6 +137,24 @@ those to work. What I have gotten to work is this:
 
 That will have to do for now. Reference:
 http://stackoverflow.com/questions/2944297/postgresql-function-for-last-inserted-id
+
+---
+
+It's just occurred to me that I've got the database set up with a shared books
+and reviews table. I think that's okay, I'll just need make sure I don't
+accidentally expose information of other users, especially during search. This
+could mess up my method of getting the last bookid, though. I may need to
+redesign the book schema to use title+authorl+authorf as the key.
+
+--- 
+
+I've been thinking about how to implement tags. It's basically just a list of
+keywords associated with the :tags key. However, if I'd like to do
+auto-complete then I can't be searching through every entry like this: 
+book: tags: <list of tags>. That won't scale at all, and it's inelegant
+besides. So I'm thinking about adding new keys to the user record - it'll have
+a list of all the keys the user has used. I'll also add them to the book record
+as necessary.
 *** setup
 with psql
 sudo su postgres

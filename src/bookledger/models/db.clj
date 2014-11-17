@@ -19,7 +19,7 @@
 
 (defn read-books [user]
   (sql/query db-spec ["SELECT * FROM books LEFT JOIN reviews ON books.bookid =
-  reviews.bookid WHERE userid = ? ORDER BY reviews.date" user]))
+  reviews.bookid WHERE userid = ? ORDER BY reviews.date DESC" user]))
 
 (defn get-bookid
   "Returns the id of the last book entered"

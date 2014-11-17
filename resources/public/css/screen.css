@@ -20,11 +20,9 @@ body {
 
 #header form {
     float: right;
-
 }
 
 #header a {
-
     padding: 0px 10px;    
 }
 
@@ -66,5 +64,18 @@ body {
 label {
     width: 150px;
     float: left;
+}
+
+.summary {
+    background-color: #B22222;
+    color: #F5f5f5;
+}
+
+.title {
+    float: left;
+    padding: 0px 10px;    
+}
+.detail {
+
 }
 
