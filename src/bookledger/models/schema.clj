@@ -32,3 +32,18 @@
                        [:date :timestamp]
                        [:synopsis :text]
                        [:comment :text])))
+
+(defn create-test-table []
+  (sql/db-do-commands db-spec
+                      (sql/create-table-ddl
+                       :test
+                       [:bookid :serial]
+                       [:userid :int]
+                       [:title "varchar(100)"]
+                       [:authorl "varchar(50)"]
+                       [:authorf "varchar(50)"]
+                       [:series "varchar(100)"]
+                       [:seriesnum :int]
+                       [:constraint :u_book "PRIMARY KEY(userid,title,authorl,authorf)"])))
+
+
