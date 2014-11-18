@@ -1,6 +1,6 @@
 (defproject bookledger "0.1.0-SNAPSHOT"
-  :description "FIXME: write description"
-  :url "http://example.com/FIXME"
+  :description "A ledger for books"
+  :url "https://bookledger.herokuapp.com/"
   :dependencies [[org.clojure/clojure "1.6.0"]
                  [compojure "1.1.6"]
                  [hiccup "1.0.5"]
