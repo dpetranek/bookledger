@@ -13,6 +13,8 @@
   :ring {:handler bookledger.handler/app
          :init bookledger.handler/init
          :destroy bookledger.handler/destroy}
+  :uberjar-name "bookledger.jar"
+  :min-lein-version "2.0.0"
   :profiles
   {:uberjar {:aot :all}
    :production
