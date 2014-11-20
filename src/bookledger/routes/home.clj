@@ -20,12 +20,12 @@
         [:div.title title]
         [:div.date (date->str date)]]
        [:div.detail
-        [:div authorl "," authorf]
-        [:div title]
-        (when series [:div series " " seriesnum])
-        [:div rating]
-        [:div synopsis]
-        [:div comment]]])]])
+        [:div "Author: " authorl "," authorf]
+        [:div "Title: " title]
+        (when series [:div "Series: " series " " seriesnum])
+        [:div "Rating: " rating]
+        [:div "Synopsis: " synopsis]
+        [:div "Comment: " comment]]])]])
 
 (defn home [& userid]
   (layout/common

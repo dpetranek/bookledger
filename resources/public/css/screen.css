@@ -1,7 +1,9 @@
 
 
 body {
+  font-family: sans-serif;
   min-width: 450px;      /* 2x LC width + RC width */
+  background-color: #Fff8dc;
 }
 
 #container {
@@ -46,11 +48,15 @@ body {
 }
 
 #left {
-    width: 150px;
+    width: 10%;
 }
 
 #right {
-  width: 150px;          /* LC width */
+  width: 10%;          /* LC width */
+}
+
+.sidebar {
+    width: 10%;
 }
 
 #footer {

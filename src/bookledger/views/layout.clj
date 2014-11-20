@@ -32,9 +32,9 @@
    [:div {:id "container"}
     [:div#header (login-widget)]
     [:div.main
-       [:div.column {:id "left"} (sidebar)]
+       [:div.column.sidebar (sidebar)]
        [:div.column {:id "center"} content]
-       [:div.column {:id "right"} (sidebar)]]
+       [:div.column.sidebar (sidebar)]]
     [:div#footer]]))
 
 
