@@ -36,32 +36,33 @@
 (defn add-book []
   (layout/common
    (form-to [:post "/library"]
-            [:div
+            [:div.authorl
              (label "authorl" "Author")
              (text-field {:tabindex 1 :placeholder "Last Name"} "authorl")]
-            [:div
+            [:div.authorf
+             (label "authorf" ".")
              (text-field {:tabindex 2 :placeholder "First Name"} "authorf")]
-            [:div
+            [:div.title
              (label "title" "Title")
              (text-field {:tabindex 3} "title")]
-            [:div
+            [:div.series
              (label "series" "Series")
              (text-field {:tabindex 4} "series")]
-            [:div
+            [:div.seriesnum
              (label "seriesnum" "#")
              (text-field {:tabindex 5 :size 2} "seriesnum")]
-            [:div
+            [:div.rating
              (label "rating" "Rating")
              (text-field {:tabindex 6 :size 2} "rating")]
-            [:div
+            [:div.date
              (label "date" "Date")
              (text-field {:tabindex 7 :placeholder "yyyyMMdd"} "date")]
-            [:div
+            [:div.synopsis
              (label "synopsis" "Synopsis")
-             (text-area {:tabindex 8} "synopsis")]
-            [:div
+             (text-area {:tabindex 8 :rows 10 :cols 100} "synopsis")]
+            [:div.comment
              (label "comment" "Comment")
-             (text-area {:tabindex 9} "comment")]
+             (text-area {:tabindex 9 :rows 10 :cols 100} "comment")]
             (submit-button {:tabindex 10} "Add Book"))))
 
 (defn handle-library [request]

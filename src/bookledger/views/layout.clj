@@ -29,12 +29,14 @@
 
 (defn common [& content]
   (base
-   [:div {:id "container"}
-    [:div#header (login-widget)]
+   [:div.wrapper
+    [:div.header (login-widget)]
     [:div.main
        [:div.column.sidebar (sidebar)]
-       [:div.column {:id "center"} content]
+       [:div.column.content content]
        [:div.column.sidebar (sidebar)]]
-    [:div#footer]]))
+    [:div.footer]]))
+
+
 
 

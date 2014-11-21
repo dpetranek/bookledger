@@ -1,87 +1,89 @@
 
 
 body {
+  background: #FFF;
   font-family: sans-serif;
-  min-width: 450px;      /* 2x LC width + RC width */
-  background-color: #Fff8dc;
+
 }
 
-#container {
-    height: 100%;
-    display: table;
-    width: 100%;
-    text-align: center;
+.wrapper {
+  height: 100%;
+  display: table;
+  width: 100%;
+  text-align: center;
+}
+
+.header {
+  display: table-row;
+  text-align: right;
+  padding: 0px 10px;    
+}
+.header a {
     padding: 0px 10px;    
+    
 }
-
-#header {
-    display: table-row;
-    text-align: right;
-
-}
-
-#header form {
-    float: right;
-}
-
-#header a {
-    padding: 0px 10px;    
-}
+.header a:link {text-decoration: none; color: #B22222;}
+.header a:hover {text-decoration: underline; color: white;}
+.header a:visited {text-decoration: none; color: #B22222;}
 
 .main {
-    height: 100%;
-    display: table;
-    width: 100%;
+  height: 100%;
+  display: table;
+  width: 100%;
 }
 
 .column {
-    display: table-cell;
+  display: table-cell;
 }
 
-#center {
-  width: 100%;
-  text-align: left;
-  margin: auto;
+.content {
+    text-align: left;
 }
-#center h1 {
+.content h1 {
     text-align: center;
+    color: #B22222; 
 }
-
-#left {
-    width: 10%;
+.summary {
+    background-color: #B22222;
+    color: #FFFEEE;
+    border: 2px;
+    border-radius: 2px;
+    padding: 2px 3px;
 }
-
-#right {
-  width: 10%;          /* LC width */
+.booktitle {
+    float: left;
+    padding: 0px 10px;    
+}
+.bookdate {
+    text-align: right;
+}
+.detail {
+    padding: 2px 3px;
 }
 
 .sidebar {
-    width: 10%;
+  width: 10%;
 }
 
-#footer {
+.footer {
   display: table-row;
+  height:1px;
+  background: #111;
 }
 
 .error {
     color: red;
 }
 
-label {
-    width: 150px;
+form div {
+    display: table-row;
+}
+.authorl {
+}
+.authorf {
+}
+
+form label {
     float: left;
+    width: 100px;
 }
-
-.summary {
-    background-color: #B22222;
-    color: #F5f5f5;
-}
-
-.title {
-    float: left;
-    padding: 0px 10px;    
-}
-.detail {
-
-}
-

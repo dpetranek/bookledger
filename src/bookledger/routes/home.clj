@@ -17,10 +17,10 @@
           (db/read-books userid)]
       [:div.results
        [:div.summary
-        [:div.title title]
-        [:div.date (date->str date)]]
+        [:div.booktitle title]
+        [:div.bookdate (date->str date)]]
        [:div.detail
-        [:div "Author: " authorl "," authorf]
+        [:div "Author: " authorl ", " authorf]
         [:div "Title: " title]
         (when series [:div "Series: " series " " seriesnum])
         [:div "Rating: " rating]
