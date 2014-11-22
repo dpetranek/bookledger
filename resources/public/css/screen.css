@@ -48,7 +48,7 @@ body {
     color: #FFFEEE;
     border: 2px;
     border-radius: 2px;
-    padding: 2px 3px;
+    padding: 4px 3px;
 }
 .booktitle {
     float: left;
@@ -58,7 +58,10 @@ body {
     text-align: right;
 }
 .detail {
-    padding: 2px 3px;
+    margin: 7px 5px;
+}
+.detail div {
+    padding: 1px 3px;
 }
 
 .sidebar {
@@ -87,3 +90,12 @@ form label {
     float: left;
     width: 100px;
 }
+.label {
+    float: left;
+    width: 100px;
+    color: #333;
+}
+.data {
+    background-color: #efefef;
+}
+

@@ -21,7 +21,7 @@
     (bigdec c)
     nil))
 
-(def bformatter (tf/formatter "yyyyMMdd"))
+(def bformatter (tf/formatter "MM/dd/yyyy"))
 
 (defn str->date [s]
   (->> s
@@ -56,7 +56,7 @@
              (text-field {:tabindex 6 :size 2} "rating")]
             [:div.date
              (label "date" "Date")
-             (text-field {:tabindex 7 :placeholder "yyyyMMdd"} "date")]
+             (text-field {:tabindex 7 :placeholder "MM/dd/yyyy"} "date")]
             [:div.synopsis
              (label "synopsis" "Synopsis")
              (text-area {:tabindex 8 :rows 10 :cols 100} "synopsis")]
