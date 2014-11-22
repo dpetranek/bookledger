@@ -19,6 +19,16 @@
   {:uberjar {:aot :all}
    :production
    {:ring
-    {:open-browser? false, :stacktraces? false, :auto-reload? false}}
+    {:open-browser? false,
+     :stacktraces? false,
+     :auto-reload? false}
+    :env {:port 3000
+          :db-url "//localhost/bookledger"
+          :db-user "bookledger"
+          :db-pass "admin"}}
    :dev
-   {:dependencies [[ring-mock "0.1.5"] [ring/ring-devel "1.3.1"]]}})
+   {:dependencies [[ring-mock "0.1.5"] [ring/ring-devel "1.3.1"]]
+    :env {:port 3000
+          :db-url "//localhost/bookledger"
+          :db-user "bookledger"
+          :db-pass "admin"}}})
