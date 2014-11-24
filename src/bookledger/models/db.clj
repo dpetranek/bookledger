@@ -14,8 +14,7 @@
   (first (sql/query db-spec ["SELECT * FROM users WHERE username = ?"
   username])))
 
-(defn add-book [book]
-  (sql/insert! db-spec :books book))
+
 
 (defn read-books [user]
   (sql/query db-spec ["SELECT * FROM books LEFT JOIN reviews ON books.bookid =
@@ -25,6 +24,27 @@
   "Returns the id of the last book entered"
   []
   (sql/query db-spec ["SELECT max(bookid) FROM books"]))
+
+(defn bookdup [book]
+  (sql/query db-spec ["SELECT bookid FROM books WHERE userid=? and authorl=? and
+  authorf=? and title=?"
+                      (:userid book)
+                      (:authorl book)
+                      (:authorf book)
+                      (:title book)]))
+
+(defn dup? [book]
+  (when-let [bookid (-> book
+                      bookdup
+                      first
+                      :bookid)]
+    bookid))
+
+(defn add-book [book]
+  (sql/insert! db-spec :books book))
+
+(defn update-book [book bookid]
+  (sql/update! db-spec :books book ["bookid=?" bookid]))
 
 (defn add-review [review]
   (sql/insert! db-spec :reviews review))

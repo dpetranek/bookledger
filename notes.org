@@ -158,6 +158,16 @@ book: tags: <list of tags>. That won't scale at all, and it's inelegant
 besides. So I'm thinking about adding new keys to the user record - it'll have
 a list of all the keys the user has used. I'll also add them to the book record
 as necessary.
+---
+I'm trying to modify the add book form so that if the book already exists it
+will reuse that bookid for the new review. So far I've made the dup? function
+which will check if a record meets certain criteria. However, I'm not sure how
+tight to make the criteria. I'm leaning towards making it match title,
+authorl, authorf, and userid. I'm worried that I'll want to add books where I
+don't know the author, though. I guess the work around will be to look it up
+and edit it before adding another review. Grr, this is hard because I'd like to
+track recommendations and those are often much less accurate. Oh well, first
+things first.
 *** setup
 with psql
 sudo su postgres
