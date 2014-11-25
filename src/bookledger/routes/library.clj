@@ -68,28 +68,28 @@
 (defn handle-library [request]
   (if-let [bookid (db/dup? request)]
     (try
+      ;; don't need to add book, just add review
       (db/add-review {:bookid bookid
                       :rating (char->int (:rating request))
                       :date (when (blank? (:date request))
                               (str->date (:date request)))
-                      :synopsis (blank? (:synopsis request))
                       :comment (blank? (:comment request))})
-      (resp/redirect "/"))
+)
 
     (try (db/add-book {:authorl (blank? (:authorl request))
                        :authorf (blank? (:authorf request))
                        :title (blank? (:title request))
                        :series (blank? (:series request))
                        :seriesnum  (char->int (:seriesnum request))
+                       :synopsis (blank? (:synopsis request))
                        :userid (:userid (session/get :user))})
          (let [bookid (first (db/get-bookid))]
            (db/add-review {:bookid (:max bookid)
                            :rating (char->int (:rating request))
                            :date (when (blank? (:date request))
                                    (str->date (:date request)))
-                           :synopsis (blank? (:synopsis request))
                            :comment (blank? (:comment request))}))
-         (resp/redirect "/"))))
+)))
 
 (defroutes library-routes
   (GET "/library" [] (add-book))

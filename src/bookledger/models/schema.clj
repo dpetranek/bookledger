@@ -8,7 +8,8 @@
                        :users
                        [:userid :serial "PRIMARY KEY"]
                        [:username "varchar(50) UNIQUE"]
-                       [:pass "varchar(100)"])))
+                       [:pass "varchar(100)"]
+                       [:utags :text])))
 
 (defn create-books-table []
   (sql/db-do-commands db-spec
@@ -20,7 +21,9 @@
                        [:authorl "varchar(50)"]
                        [:authorf "varchar(50)"]
                        [:series "varchar(100)"]
-                       [:seriesnum :int])))
+                       [:seriesnum :int]
+                       [:tags :text]
+                       [:synopsis :text])))
 
 (defn create-reviews-table []
   (sql/db-do-commands db-spec
@@ -30,7 +33,6 @@
                        [:bookid :int]
                        [:rating :int]
                        [:date :timestamp]
-                       [:synopsis :text]
                        [:comment :text])))
 
 (defn create-test-table []
