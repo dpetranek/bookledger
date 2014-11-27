@@ -4,9 +4,6 @@
             [noir.session :as session]
             [noir.validation :as val]
             [noir.response :as resp]
-            [clj-time.core :as t]
-            [clj-time.format :as tf]
-            [clj-time.coerce :as tc]
             [bookledger.views.layout :as layout]
             [bookledger.models.db :as db]))
 
@@ -15,23 +12,6 @@
   (if (not= s "")
     s
     nil))
-
-(defn char->int [c]
-  (if (blank? c)
-    (bigdec c)
-    nil))
-
-(def bformatter (tf/formatter "MM/dd/yyyy"))
-
-(defn str->date [s]
-  (->> s
-       (tf/parse bformatter)
-       (tc/to-sql-date)))
-
-(defn date->str [d]
-  (->> d
-       (tc/from-sql-date)
-       (tf/unparse bformatter)))
 
 (defn add-book []
   (layout/common
@@ -54,18 +34,55 @@
             [:div.rating
              (label "rating" "Rating")
              (text-field {:tabindex 6 :size 2} "rating")]
+            [:div.tags
+             (label "tags" "Tags")
+             (text-field {:tabindex 7} "tags")]
             [:div.date
              (label "date" "Date")
-             (text-field {:tabindex 7 :placeholder "MM/dd/yyyy"} "date")]
+             (text-field {:tabindex 8 :placeholder "MM/dd/yyyy"} "date")]
             [:div.synopsis
              (label "synopsis" "Synopsis")
-             (text-area {:tabindex 8 :rows 10 :cols 100} "synopsis")]
+             (text-area {:tabindex 9 :rows 10 :cols 100} "synopsis")]
             [:div.comment
              (label "comment" "Comment")
-             (text-area {:tabindex 9 :rows 10 :cols 100} "comment")]
-            (submit-button {:tabindex 10} "Add Book"))))
+             (text-area {:tabindex 10 :rows 10 :cols 100} "comment")]
+            (submit-button {:tabindex 11} "Add Book"))))
 
 (defn handle-library [request]
+  (if-let [bookid (db/dup? request (:userid (session/get :user)))]
+    (try
+      (db/update-book {:series    (:series request)
+                       :seriesnum (char->int (:seriesnum request))
+                       :synopsis  (:synopsis request)}
+                      bookid)
+      (db/add-review {:bookid bookid
+                      :rating (char->int (:rating request))
+                      :date   (when (:date request)
+                                (str->date (:date request)))
+                      :comment (:comment request)})
+      (resp/redirect "/")
+      (catch Exception ex
+        (str "There was an error processing your book. " (.getMessage ex))))
+
+    (try
+      (db/add-book {:authorl (:authorl request)
+                    :authorf (:authorf request)
+                    :title   (:title request)
+                    :series  (:series request)
+                    :seriesnum  (char->int (:seriesnum request))
+                    :synopsis (:synopsis request)
+                    :userid  (:userid (session/get :user))})
+      (let [bookid (first (db/get-bookid))]
+        (db/add-review {:bookid (:max bookid)
+                        :rating (char->int (:rating request))
+                        :date   (when (:date request)
+                                  (str->date (:date request)))
+                        :comment (:comment request)}))
+      (resp/redirect "/")
+      (catch Exception ex
+        (str "There was an error processing your book. " (.getMessage ex))))))
+
+(defn first-library [request]
   (if-let [bookid (db/dup? request (:userid (session/get :user)))]
     (try
       (db/update-book {:series (blank? (:series request))
@@ -97,6 +114,6 @@
 (defroutes library-routes
   (GET "/library" [] (add-book))
   (POST "/library" [:as request]
-        (handle-library (:params request))))
+        (handle-library (clean-request (:params request)))))
 
 

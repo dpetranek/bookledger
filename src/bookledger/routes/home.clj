@@ -6,7 +6,7 @@
             [noir.response :as resp]
             [bookledger.views.layout :as layout]
             [bookledger.models.db :as db]
-            [bookledger.routes.library :refer [date->str]]))
+            [bookledger.util :refer :all]))
 
 
 (defn show-books [userid]
