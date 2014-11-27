@@ -66,15 +66,18 @@
             (submit-button {:tabindex 10} "Add Book"))))
 
 (defn handle-library [request]
-  (if-let [bookid (db/dup? request)]
+  (if-let [bookid (db/dup? request (:userid (session/get :user)))]
     (try
-      ;; don't need to add book, just add review
+      (db/update-book {:series (blank? (:series request))
+                       :seriesnum (char->int (:seriesnum request))
+                       :synopsis (blank? (:synopsis request))}
+                      bookid)
       (db/add-review {:bookid bookid
                       :rating (char->int (:rating request))
                       :date (when (blank? (:date request))
                               (str->date (:date request)))
                       :comment (blank? (:comment request))})
-)
+      (resp/redirect "/"))
 
     (try (db/add-book {:authorl (blank? (:authorl request))
                        :authorf (blank? (:authorf request))
@@ -89,7 +92,7 @@
                            :date (when (blank? (:date request))
                                    (str->date (:date request)))
                            :comment (blank? (:comment request))}))
-)))
+         (resp/redirect "/"))))
 
 (defroutes library-routes
   (GET "/library" [] (add-book))

@@ -25,19 +25,19 @@
   []
   (sql/query db-spec ["SELECT max(bookid) FROM books"]))
 
-(defn bookdup [book]
+(defn bookdup [book userid]
   (sql/query db-spec ["SELECT bookid FROM books WHERE userid=? and authorl=? and
   authorf=? and title=?"
-                      (:userid book)
+                      userid
                       (:authorl book)
                       (:authorf book)
                       (:title book)]))
 
-(defn dup? [book]
+(defn dup? [book userid]
   (when-let [bookid (-> book
-                      bookdup
-                      first
-                      :bookid)]
+                        (bookdup userid)
+                        (first)
+                        (:bookid))]
     bookid))
 
 (defn add-book [book]
