@@ -14,8 +14,6 @@
   (first (sql/query db-spec ["SELECT * FROM users WHERE username = ?"
   username])))
 
-
-
 (defn read-books [user]
   (sql/query db-spec ["SELECT * FROM books LEFT JOIN reviews ON books.bookid =
   reviews.bookid WHERE userid = ? ORDER BY reviews.date DESC" user]))

@@ -19,12 +19,16 @@ body {
   padding: 0px 10px;    
 }
 .header a {
-    padding: 0px 10px;    
-    
+    padding: 0px 10px;        
 }
+
 .header a:link {text-decoration: none; color: #B22222;}
 .header a:hover {text-decoration: underline; color: white;}
 .header a:visited {text-decoration: none; color: #B22222;}
+
+.header form {float: right;}
+
+
 
 .main {
   height: 100%;
@@ -86,9 +90,14 @@ form div {
 .authorf {
 }
 
+form .button {
+    float: right;
+    margin: 2px;
+}
+
 form label {
     float: left;
-    width: 100px;
+    width: 150px;
 }
 .label {
     float: left;

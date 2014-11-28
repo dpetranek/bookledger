@@ -63,13 +63,21 @@ make sure to add exception handling later
 ** DONE get dates to work
 ** DONE display books left join reviews
 or is it right join? I need to figure out how to find duplicate books.
-** TODO verify no duplicate books
+** DONE verify no duplicate books
 may need to alter the books schema so title+authorl+authorf+userid is the
 key. Update row, catch exceptions, and then insert new row. 
 
 This is prone to race conditions, though. 
+---
+Instead, I check for dups on title, authorf+l, and userid. On dup, I update the
+book fields and add a new review linked to the same bookid. This is better, but
+the updating function is silent - you don't know you're updating the series,
+seriesnum, or synopsis until you check back up. Still not optimal, but I can
+update this dynamically once I start working on client side logic.
 ** TODO implement tags
 add each unique tag to the user record
+- a hash map should work for this. Make a keyword out of each space delimited
+  word and add it to the hashmap.
 add multiple tags to a book record 
 ** TODO account settings
 ** TODO deletion

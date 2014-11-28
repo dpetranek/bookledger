@@ -21,7 +21,7 @@
      (link-to "/" "Bookledger")
      (link-to "/library" "Add Book")
      (link-to "/logout" (str "Logout " user))]
-    [:div (link-to "/register" "Register")
+    [:div.register (link-to "/register" "Register")
      (form-to [:post "/login"]
               (text-field {:placeholder "Username"} "username")
               (password-field {:placeholder "Password"} "pass")
