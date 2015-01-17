@@ -1,10 +1,11 @@
 (ns bookledger.util
   (:require [clj-time.core :as t]
             [clj-time.format :as tf]
-            [clj-time.coerce :as tc]))
+            [clj-time.coerce :as tc]
+            [clojure.string :as s]))
 
 (defn char->int [c]
-  (if (blank? c)
+  (if (s/blank? c)
     (bigdec c)
     nil))
 

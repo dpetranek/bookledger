@@ -5,7 +5,8 @@
             [noir.validation :as val]
             [noir.response :as resp]
             [bookledger.views.layout :as layout]
-            [bookledger.models.db :as db]))
+            [bookledger.models.db :as db]
+            [bookledger.util :refer :all]))
 
 
 (defn add-book []
@@ -57,7 +58,7 @@
                       :comment (:comment request)})
       (resp/redirect "/")
       (catch Exception ex
-        (str "There was an error processing your book. " (.getMessage ex))))
+        (str "There was an error updating your book. " (.getMessage ex))))
 
     (try
       (db/add-book {:authorl (:authorl request)
@@ -75,7 +76,7 @@
                         :comment (:comment request)}))
       (resp/redirect "/")
       (catch Exception ex
-        (str "There was an error processing your book. " (.getMessage ex))))))
+        (str "There was an error adding your book. " (.getMessage ex))))))
 
 (defroutes library-routes
   (GET "/library" [] (add-book))
