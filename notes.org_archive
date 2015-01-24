@@ -1,0 +1,142 @@
+#    -*- mode: org -*-
+
+
+Archived entries from file /home/dan/projects/bookledger/notes.org
+
+
+* DONE implement insert-book
+:PROPERTIES:
+:ARCHIVE_TIME: 2015-01-23 Fri 23:10
+:ARCHIVE_FILE: ~/projects/bookledger/notes.org
+:ARCHIVE_OLPATH: action
+:ARCHIVE_CATEGORY: notes
+:ARCHIVE_TODO: DONE
+:END:
+(session/get :userid) isn't actually returning the userid, I don't
+believe. I've updated the auth workflow to load the whole user record into the
+session as a map. Maybe that's the issue, that it's a map inside the map. 
+---
+I've fixed it by verifying that we're loading the whole user row as :user and
+then use (:<columnIwant> (session/get :user)). That works, is a bit verbose,
+but I'll refactor later.
+
+* DONE fix double display of layout/common
+:PROPERTIES:
+:ARCHIVE_TIME: 2015-01-23 Fri 23:10
+:ARCHIVE_FILE: ~/projects/bookledger/notes.org
+:ARCHIVE_OLPATH: action
+:ARCHIVE_CATEGORY: notes
+:ARCHIVE_TODO: DONE
+:END:
+So, I had show-library wrapped in layout/common. That caused everything to be
+show twice. When I removed the wrapping, nothing showed at all.
+---
+I fixed this by realizing that a funtion only returns the last item. So I
+wrapped the whole output in a div. It's a hack, but it works for now.
+
+
+* DONE allow blank inputs
+:PROPERTIES:
+:ARCHIVE_TIME: 2015-01-23 Fri 23:10
+:ARCHIVE_FILE: ~/projects/bookledger/notes.org
+:ARCHIVE_OLPATH: action
+:ARCHIVE_CATEGORY: notes
+:ARCHIVE_TODO: DONE
+:END:
+I need to do some validation. So, I've changed the handler so POST to /libray
+goes to handle-request. It just submits the whole request map. By having VALUES
+of the query be key lookups, I was able to get it working as before.
+
+Then I started some validation. I added an if statement to series, returning
+"null" if (:series request-map) was falsey. That worked wonderfully. Then I tried
+to do the same with seriesnum. Things stopped working. I changed it to return
+nil instead of "null", and now I can submit blank series and blank
+seriesnum. However, now author and title are returning nil too, for some reason
+I can't readily divine. I'm going to change it back and see if I can get the
+previous behavior.
+
+Ok, I think it's a problem with the request map, actually. Something has
+changed in how the browser is submitting data - I think it's empty. When I
+click on the POST request in the console, there is no params section. I'm tired
+and my head is not working well, I'll come at this tomorrow.
+
+---
+
+Make sure that all the network access logging option are checked in the browser
+console. I am sending data.
+---
+So it looks like I was trying to get at nested data. Adding (:params request) to
+the handle-books invocation in home.clj fixed the data access issues. And now I
+can handle blanks thanks to helper functions. 
+
+I was able to debug by looking at the database using the repl. In psql, blank
+columns are just blank, so I couldn't tell the difference between nil and
+"". But with (sql/query db-spec ["<query>"], I was able to see what actual
+clojure data was stored. After that, it was just mop-up.
+
+* DONE design add-book form
+:PROPERTIES:
+:ARCHIVE_TIME: 2015-01-23 Fri 23:10
+:ARCHIVE_FILE: ~/projects/bookledger/notes.org
+:ARCHIVE_OLPATH: action
+:ARCHIVE_CATEGORY: notes
+:ARCHIVE_TODO: DONE
+:END:
+title
+authorf authorl
+series seriesnum
+rating
+date
+synopsis
+comment
+
+this will collect information for both the books table insert and the reviews
+table insert. This will be on its own seperate page. 
+
+* DONE implement insert-review
+:PROPERTIES:
+:ARCHIVE_TIME: 2015-01-23 Fri 23:10
+:ARCHIVE_FILE: ~/projects/bookledger/notes.org
+:ARCHIVE_OLPATH: action
+:ARCHIVE_CATEGORY: notes
+:ARCHIVE_TODO: DONE
+:END:
+make sure to add exception handling later
+
+* DONE get dates to work
+:PROPERTIES:
+:ARCHIVE_TIME: 2015-01-23 Fri 23:10
+:ARCHIVE_FILE: ~/projects/bookledger/notes.org
+:ARCHIVE_OLPATH: action
+:ARCHIVE_CATEGORY: notes
+:ARCHIVE_TODO: DONE
+:END:
+
+* DONE display books left join reviews
+:PROPERTIES:
+:ARCHIVE_TIME: 2015-01-23 Fri 23:10
+:ARCHIVE_FILE: ~/projects/bookledger/notes.org
+:ARCHIVE_OLPATH: action
+:ARCHIVE_CATEGORY: notes
+:ARCHIVE_TODO: DONE
+:END:
+or is it right join? I need to figure out how to find duplicate books.
+
+* DONE verify no duplicate books
+:PROPERTIES:
+:ARCHIVE_TIME: 2015-01-23 Fri 23:10
+:ARCHIVE_FILE: ~/projects/bookledger/notes.org
+:ARCHIVE_OLPATH: action
+:ARCHIVE_CATEGORY: notes
+:ARCHIVE_TODO: DONE
+:END:
+may need to alter the books schema so title+authorl+authorf+userid is the
+key. Update row, catch exceptions, and then insert new row. 
+
+This is prone to race conditions, though. 
+---
+Instead, I check for dups on title, authorf+l, and userid. On dup, I update the
+book fields and add a new review linked to the same bookid. This is better, but
+the updating function is silent - you don't know you're updating the series,
+seriesnum, or synopsis until you check back up. Still not optimal, but I can
+update this dynamically once I start working on client side logic.
